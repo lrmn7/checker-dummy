@@ -161,7 +161,12 @@ const SomniaAirdropChecker: React.FC = () => {
    * Opens Twitter with pre-filled tweet about the airdrop result
    */
   const handleShareToTwitter = () => {
-    const tweetText = `🎉 Just checked my @SomniaNetwork airdrop eligibility and I'm getting ${tokenAmount.toLocaleString()} SOM tokens! ✨\n\nCheck your eligibility now! 🚀\n\n#Somnia #Airdrop #Metaverse`;
+    const tweetText = `Just checked my @Somnia_Network airdrop eligibility and I'm getting ${tokenAmount.toLocaleString()} $SOM tokens! ✨
+
+Check your eligibility now 👉 https://checker.lrmn.link/
+
+#Somnia #Airdrop #Metaverse`;
+
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       tweetText
     )}`;

@@ -20,7 +20,7 @@ const AnimeBackground: React.FC = () => {
       />
       
       {/* Blur overlay */}
-      <div className="absolute inset-0 backdrop-blur-md" />
+      <div className="absolute inset-0 backdrop-blur-sm" />
 
       {/* Floating particles and magic orbs */}
       <div className="absolute inset-0">

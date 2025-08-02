@@ -14,12 +14,13 @@ const SomniaAirdropChecker: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [tokenAmount, setTokenAmount] = useState(0);
+  const [isEligible, setIsEligible] = useState(false);
 
   /**
-   * Generates a random token amount between 1000 and 50000 (not rounded to thousands)
+   * Generates a random token amount between 1000 and 100000
    */
   const generateRandomAmount = (): number => {
-    return Math.floor(Math.random() * (100850 - 1059 + 1)) + 1000;
+    return Math.floor(Math.random() * (100000 - 1000 + 1)) + 1000;
   };
 
   /**
@@ -39,13 +40,22 @@ const SomniaAirdropChecker: React.FC = () => {
     setIsLoading(true);
 
     // Simulate API call with 2-3 second delay
-    const delay = 6000 + Math.random() * 1000; // 2-3 seconds
-
+    const delay = 6000 + Math.random() * 1000;
     await new Promise((resolve) => setTimeout(resolve, delay));
 
-    // Generate random amount and show result
-    const amount = generateRandomAmount();
-    setTokenAmount(amount);
+    // Logic to determine eligibility (10% chance to be ineligible)
+    const eligibilityRoll = Math.random();
+    const eligible = eligibilityRoll > 0.1;
+
+    if (eligible) {
+      const amount = generateRandomAmount();
+      setTokenAmount(amount);
+      setIsEligible(true);
+    } else {
+      setTokenAmount(0);
+      setIsEligible(false);
+    }
+
     setIsLoading(false);
     setShowResult(true);
   };
@@ -182,6 +192,7 @@ Check your eligibility now 👉 https://checker.lrmn.link/
     setIsLoading(false);
     setShowResult(false);
     setTokenAmount(0);
+    setIsEligible(false);
   };
 
   return (
@@ -243,6 +254,7 @@ Check your eligibility now 👉 https://checker.lrmn.link/
             <div className="space-y-6 animate-fade-in">
               <ResultCard
                 amount={tokenAmount}
+                isEligible={isEligible}
                 onDownload={handleDownloadResult}
                 onShare={handleShareToTwitter}
               />

@@ -2,19 +2,21 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FaDownload, FaXTwitter } from "react-icons/fa6";
+
 interface ResultCardProps {
   amount: number;
+  isEligible: boolean;
   onDownload: () => void;
   onShare: () => void;
 }
 
 /**
  * ResultCard Component
- * Displays the airdrop eligibility result with a static design (no hover animations)
- * Shows random SOM amount and provides download/share functionality
+ * Displays the airdrop eligibility result based on the 'isEligible' prop.
  */
 const ResultCard: React.FC<ResultCardProps> = ({
   amount,
+  isEligible,
   onDownload,
   onShare,
 }) => {
@@ -24,35 +26,52 @@ const ResultCard: React.FC<ResultCardProps> = ({
       className="w-full max-w-md mx-auto bg-gradient-card/30 backdrop-blur-md border-2 border-primary/20 shadow-card"
     >
       <div className="p-8 text-center space-y-6">
-        {/* Header with emoji and congratulations */}
-        <div className="space-y-2">
-          <div className="text-4xl">🎉</div>
-          <h2 className="text-2xl font-bold text-gradient-magic">Congrats!</h2>
-        </div>
+        {isEligible ? (
+          // Display for an ELIGIBLE wallet
+          <>
+            {/* Header with emoji and congratulations */}
+            <div className="space-y-2">
+              <div className="text-4xl">🎉</div>
+              <h2 className="text-2xl font-bold text-gradient-magic">Congrats!</h2>
+            </div>
 
-        {/* Eligibility message and amount */}
-        <div className="space-y-3">
-          <p className="text-lg text-foreground/90">You are eligible for</p>
-          <div className="text-4xl font-bold">
-            <span className="text-foreground/90">
-              {amount.toLocaleString()}
-            </span>{" "}
-            <span className="text-gradient-plasma"> $SOM</span>
-          </div>
+            {/* Eligibility message and amount */}
+            <div className="space-y-3">
+              <p className="text-lg text-foreground/90">You are eligible for</p>
+              <div className="text-4xl font-bold">
+                <span className="text-foreground/90">
+                  {amount.toLocaleString()}
+                </span>{" "}
+                <span className="text-gradient-plasma"> $SOM</span>
+              </div>
+              <p className="text-sm text-gray-600">
+                Somnia tokens will be distributed soon! ✨
+              </p>
+            </div>
+          </>
+        ) : (
+          // Display for a NOT ELIGIBLE wallet
+          <>
+            {/* Header with emoji and message */}
+            <div className="space-y-2">
+              <div className="text-4xl">😞</div>
+              <h2 className="text-2xl font-bold text-red-400">Oops!</h2>
+            </div>
 
-          <p className="text-sm text-gray-600">
-            Somnia tokens will be distributed soon! ✨
-          </p>
-        </div>
+            {/* Ineligibility message */}
+            <div className="space-y-3">
+            <p className="text-lg text-foreground/80">
+              Unfortunately, you're <strong>NOT ELIGIBLE</strong>.
+            </p>
+            <p className="text-sm text-gray-600">
+              Stay tuned for upcoming events!
+            </p>
+            </div>
+          </>
+        )}
 
-        {/* Action buttons - note: no hover animations as per requirements */}
+        {/* Action buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
-          {/*  <Button 
-            onClick={onDownload}
-            className="btn-anime-secondary flex-1 text-sm"
-          >
-            📥 Download Result
-          </Button> */}
           <Button
             onClick={onShare}
             className="btn-anime-primary flex-1 text-sm"
